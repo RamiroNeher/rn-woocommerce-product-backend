@@ -1,0 +1,4 @@
+table.wp-list-table .column-product_cat,
+table.wp-list-table .column-product_tag {
+   display: none;
+}
