@@ -14,7 +14,7 @@
   */
  function rn_remove_product_editor() {
     remove_post_type_support( 'product', 'editor' );
-    }
+  }
 
   add_action( 'init', 'rn_remove_product_editor' );
 
@@ -28,7 +28,7 @@
   add_action( 'init', 'rn_tags_unregister_tags' );
 
    /**
-   * Carga los estilos
+   * Carga el estilo que oculta la etiqueta tag de la tabla de la lista de productos. 
    */
    function rn_admin_theme_style() {
        wp_enqueue_style('my-admin-theme', plugins_url('/admin/css/style.css', __FILE__));
