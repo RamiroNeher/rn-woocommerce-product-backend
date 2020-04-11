@@ -13,8 +13,8 @@
   * Remove the default editor from the product page
   */
  function rn_remove_product_editor() {
-    remove_post_type_support( 'product', 'editor' );
-  }
+ remove_post_type_support( 'product', 'editor' );
+}
 
   add_action( 'init', 'rn_remove_product_editor' );
 
@@ -35,3 +35,21 @@
    };
 
    add_action('admin_enqueue_scripts', 'rn_admin_theme_style');
+
+  /**
+   * Actualiza automáticamente el estado de los pedidos a COMPLETADO
+   */
+add_action( 'woocommerce_order_status_processing', 'actualiza_estado_pedidos_a_completado' );
+add_action( 'woocommerce_order_status_on-hold', 'actualiza_estado_pedidos_a_completado' );
+function actualiza_estado_pedidos_a_completado( $order_id ) {
+   global $woocommerce;
+
+   //ID's de las pasarelas de pago a las que afecta
+   $paymentMethods = array( 'bacs', 'cheque', 'cod', 'paypal', 'stripe' );
+
+   if ( !$order_id ) return;
+   $order = new WC_Order( $order_id );
+
+   if ( !in_array( $order->payment_method, $paymentMethods ) ) return;
+   $order->update_status( 'completed' );
+}
